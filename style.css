@@ -23,6 +23,7 @@ body {
     transform: rotate(15deg);
     z-index: -1;
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+    animation: swipeIn 0.6s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
 }
 
 
@@ -30,6 +31,8 @@ header {
     margin-top: 50px;
     margin-bottom: 20px;
     transform: rotate(-3deg);
+    opacity: 0; 
+    animation: titlePop 0.5s cubic-bezier(0.1, 0.9, 0.2, 1) 0.2s forwards;
 }
 
 .p5-title {
@@ -68,6 +71,8 @@ main {
 .main-card {
     transform: rotate(2deg);
     clip-path: polygon(2% 0%, 100% 3%, 98% 97%, 0% 100%);
+    opacity: 0;
+    animation: cardOneFadeIn 0.5s ease-out 0.4s forwards;
 }
 
 /*projects*/
@@ -78,6 +83,8 @@ main {
     /* Schatten mal zur Abwechslung nach links oben für mehr Asymmetrie */
     box-shadow: -10px -10px 0px #1b13b1; 
     clip-path: polygon(0% 0%, 98% 3%, 100% 100%, 3% 97%);
+    opacity: 0;
+    animation: cardTwoFadeIn 0.5s ease-out 0.6s forwards;
 }
 
 /*projects style*/
@@ -105,6 +112,8 @@ main {
     color: #ffffff;
     box-shadow: 12px 12px 0px #1b13b1;
     clip-path: polygon(0% 3%, 97% 0%, 100% 97%, 3% 100%);
+    opacity: 0;
+    animation: cardThreeFadeIn 0.5s ease-out 0.8s forwards;
 }
 
 
@@ -214,6 +223,35 @@ main {
     text-align: center;
 }
 
+@keyframes swipeIn {
+    0% { transform: translateX(-150%) rotate(15deg); }
+    100% { transform: translateX(0) rotate(15deg); }
+}
+
+
+@keyframes titlePop {
+    0% { transform: scale(0.1) rotate(10deg) skewX(30deg); opacity: 0; }
+    70% { transform: scale(1.1) rotate(-5deg) skewX(-10deg); opacity: 1; }
+    100% { transform: scale(1) rotate(-3deg) skewX(0deg); opacity: 1; }
+}
+
+
+@keyframes cardOneFadeIn {
+    0% { opacity: 0; transform: translateY(80px) rotate(10deg); }
+    100% { opacity: 1; transform: translateY(0) rotate(2deg); }
+}
+
+
+@keyframes cardTwoFadeIn {
+    0% { opacity: 0; transform: translateY(80px) rotate(-10deg); }
+    100% { opacity: 1; transform: translateY(0) rotate(1.5deg); }
+}
+
+
+@keyframes cardThreeFadeIn {
+    0% { opacity: 0; transform: translateY(80px) rotate(10deg); }
+    100% { opacity: 1; transform: translateY(0) rotate(-1.5deg); }
+}
 
 @media (prefers-color-scheme: light) {
  
