@@ -1,0 +1,149 @@
+/* Grundregeln & Farbpalette (Schwarz, Weiß, P5-Rot) */
+body {
+    background-color: #000000;
+    color: #ffffff;
+    font-family: 'Impact', 'Arial Black', sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Der fette rote Querstreifen im Hintergrund */
+.bg-stripe {
+    position: fixed;
+    top: -50%;
+    left: -10%;
+    width: 30%;
+    height: 200%;
+    background-color: #1b13b1; 
+    transform: rotate(15deg);
+    z-index: -1;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+}
+
+/* Header & animierter Titel */
+header {
+    margin-top: 50px;
+    margin-bottom: 20px;
+    transform: rotate(-3deg);
+}
+
+.p5-title {
+    font-size: 4.5rem;
+    background-color: #ffffff;
+    color: #000000;
+    padding: 10px 30px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    display: inline-block;
+    /* Macht die Box unregelmäßig/kantig */
+    clip-path: polygon(0% 15%, 100% 0%, 95% 85%, 5% 100%);
+    box-shadow: -10px 10px 0px #1b13b1;
+}
+
+/* Hauptbereich für die Karten */
+main {
+    width: 90%;
+    max-width: 700px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding: 20px;
+}
+
+/* Basis-Design für die ungeraden Boxen */
+.p5-card {
+    background-color: #ffffff;
+    color: #000000;
+    padding: 30px 40px;
+    position: relative;
+    box-shadow: -12px 12px 0px #000000, -12px 12px 0px 2px #ffffff;
+}
+
+/* Die weiße "About Me" Karte */
+.main-card {
+    transform: rotate(2deg);
+    clip-path: polygon(2% 0%, 100% 3%, 98% 97%, 0% 100%);
+}
+
+/* Die dunkle "Socials" Karte */
+.socials-card {
+    transform: rotate(-1.5deg);
+    background-color: #1a1a1a;
+    color: #ffffff;
+    box-shadow: 12px 12px 0px #1b13b1;
+    clip-path: polygon(0% 3%, 97% 0%, 100% 97%, 3% 100%);
+}
+
+/* Die schrägen Überschriften-Badges */
+.p5-badge {
+    position: absolute;
+    top: -25px;
+    left: 15px;
+    background-color: #000000;
+    color: #ffffff;
+    padding: 5px 20px;
+    font-size: 1.8rem;
+    transform: rotate(-5deg);
+    border: 2px solid #ffffff;
+}
+
+.p5-badge.red {
+    background-color: #1b13b1;
+    color: #ffffff;
+    border-color: #1b13b1;
+}
+
+/* Normaler Text in den Karten */
+.p5-card p {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    font-weight: 500;
+}
+
+/* Styling für die Social-Links */
+.p5-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.p5-list li {
+    transform: skewX(-10deg);
+}
+
+.p5-link {
+    font-size: 2rem;
+    color: #ffffff;
+    text-decoration: none;
+    background-color: #000000;
+    padding: 5px 20px;
+    display: inline-block;
+    transition: all 0.2s ease;
+    border: 3px solid #ffffff;
+}
+
+.p5-link:hover {
+    background-color: #1b13b1;
+    color: #000000;
+    transform: scale(1.05) rotate(2deg);
+    border-color: #1b13b1;
+}
+
+/* Der Footer-Text unten */
+.p5-footer {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 0.2em;
+    font-size: 1.6rem;
+    margin-top: 60px;
+    padding: 40px;
+    transform: rotate(-2deg);
+}
