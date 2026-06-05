@@ -2,45 +2,30 @@
 document.addEventListener('DOMContentLoaded', () => {
     const themeToggle = document.getElementById('themeToggle');
     const themeIcon = document.querySelector('.theme-icon');
+    const html = document.documentElement;
     
-    // Get saved theme from localStorage, or null if not set
-    const savedTheme = localStorage.getItem('theme');
+    // Get saved theme from localStorage
+    const savedTheme = localStorage.getItem('theme') || 'dark';
     
-    // Initialize theme on page load
-    if (savedTheme === 'light') {
-        document.documentElement.style.colorScheme = 'light';
-        themeIcon.textContent = '☀️';
-    } else if (savedTheme === 'dark') {
-        document.documentElement.style.colorScheme = 'dark';
-        themeIcon.textContent = '🌙';
-    } else {
-        // If no saved theme, use system preference
-        updateThemeIcon();
-    }
+    // Set initial theme
+    setTheme(savedTheme);
     
     // Toggle theme on button click
     themeToggle.addEventListener('click', () => {
-        const currentScheme = document.documentElement.style.colorScheme || 
-                              (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
-        
-        if (currentScheme === 'light') {
-            document.documentElement.style.colorScheme = 'dark';
-            localStorage.setItem('theme', 'dark');
-            themeIcon.textContent = '🌙';
-        } else {
-            document.documentElement.style.colorScheme = 'light';
-            localStorage.setItem('theme', 'light');
-            themeIcon.textContent = '☀️';
-        }
+        const currentTheme = document.body.getAttribute('data-theme') || 'dark';
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        setTheme(newTheme);
     });
     
-    // Listen for system theme changes when no manual override is set
-    function updateThemeIcon() {
-        if (!localStorage.getItem('theme')) {
-            const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            themeIcon.textContent = isDark ? '🌙' : '☀️';
+    // Apply theme
+    function setTheme(theme) {
+        document.body.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        
+        if (theme === 'light') {
+            themeIcon.textContent = '☀️';
+        } else {
+            themeIcon.textContent = '🌙';
         }
     }
-    
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateThemeIcon);
 });
