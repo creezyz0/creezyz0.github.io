@@ -1,4 +1,4 @@
-/* Grundregeln & Farbpalette (Schwarz, Weiß, P5-Rot) */
+
 body {
     background-color: #000000;
     color: #ffffff;
@@ -12,7 +12,7 @@ body {
     align-items: center;
 }
 
-/* Der fette rote Querstreifen im Hintergrund */
+
 .bg-stripe {
     position: fixed;
     top: -50%;
@@ -25,7 +25,7 @@ body {
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
 }
 
-/* Header & animierter Titel */
+
 header {
     margin-top: 50px;
     margin-bottom: 20px;
@@ -45,7 +45,7 @@ header {
     box-shadow: -10px 10px 0px #1b13b1;
 }
 
-/* Hauptbereich für die Karten */
+
 main {
     width: 90%;
     max-width: 700px;
@@ -55,7 +55,7 @@ main {
     padding: 20px;
 }
 
-/* Basis-Design für die ungeraden Boxen */
+/*about me*/
 .p5-card {
     background-color: #ffffff;
     color: #000000;
@@ -64,13 +64,41 @@ main {
     box-shadow: -12px 12px 0px #000000, -12px 12px 0px 2px #ffffff;
 }
 
-/* Die weiße "About Me" Karte */
+
 .main-card {
     transform: rotate(2deg);
     clip-path: polygon(2% 0%, 100% 3%, 98% 97%, 0% 100%);
 }
 
-/* Die dunkle "Socials" Karte */
+/*projects*/
+.projects-card {
+    transform: rotate(1.5deg);
+    background-color: #ffffff;
+    color: #000000;
+    /* Schatten mal zur Abwechslung nach links oben für mehr Asymmetrie */
+    box-shadow: -10px -10px 0px #1b13b1; 
+    clip-path: polygon(0% 0%, 98% 3%, 100% 100%, 3% 97%);
+}
+
+/*projects style*/
+.project-placeholder {
+    border: 4px dashed #1b13b1;
+    padding: 30px 20px;
+    text-align: center;
+    margin-top: 35px;
+    transform: skewX(-3deg);
+    background-color: #f9f9f9;
+}
+
+.project-placeholder h3 {
+    font-family: 'Impact', sans-serif;
+    color: #1b13b1;
+    font-size: 2rem;
+    margin: 0 0 10px 0;
+    letter-spacing: 3px;
+}
+
+/*socials box*/
 .socials-card {
     transform: rotate(-1.5deg);
     background-color: #1a1a1a;
@@ -79,7 +107,7 @@ main {
     clip-path: polygon(0% 3%, 97% 0%, 100% 97%, 3% 100%);
 }
 
-/* Die schrägen Überschriften-Badges */
+
 .p5-badge {
     position: absolute;
     top: -25px;
@@ -98,7 +126,7 @@ main {
     border-color: #1b13b1;
 }
 
-/* Normaler Text in den Karten */
+
 .p5-card p {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     font-size: 1.1rem;
@@ -106,7 +134,7 @@ main {
     font-weight: 500;
 }
 
-/* Styling für die Social-Links */
+
 .p5-list {
     list-style: none;
     padding: 0;
@@ -127,18 +155,24 @@ main {
     background-color: #000000;
     padding: 5px 20px;
     display: inline-block;
-    transition: all 0.2s ease;
+    transition: all 0.15s ease-out;
     border: 3px solid #ffffff;
+    position: relative;
+    z-index: 1;
 }
+
 
 .p5-link:hover {
-    background-color: #1b13b1;
-    color: #000000;
-    transform: scale(1.05) rotate(2deg);
-    border-color: #1b13b1;
+    background-color: #ffffff; 
+    color: #000000;            
+    transform: scale(1.1) rotate(4deg) skewX(5deg);
+    border-color: #1b13b1;    
+    box-shadow: -8px 8px 0px #1b13b1; 
+    letter-spacing: 2px;
+    z-index: 10;
 }
 
-/* Der Footer-Text unten */
+
 .p5-footer {
     font-family: 'Bebas Neue', sans-serif;
     letter-spacing: 0.2em;
