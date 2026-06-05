@@ -10,6 +10,13 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
+}
+
+/* Light mode via data attribute */
+body[data-theme="light"] {
+    background-color: #f4f1ea;
+    color: #000000;
 }
 
 
@@ -33,7 +40,6 @@ header {
     transform: rotate(-3deg);
     opacity: 0; 
     animation: titlePop 0.5s cubic-bezier(0.1, 0.9, 0.2, 1) 0.2s forwards;
-    position: relative;
 }
 
 .p5-title {
@@ -51,8 +57,8 @@ header {
 
 /* Theme Toggle Button */
 .theme-toggle {
-    position: absolute;
-    top: 50px;
+    position: fixed;
+    top: 20px;
     right: 20px;
     background-color: #1b13b1;
     border: 3px solid #ffffff;
@@ -70,7 +76,7 @@ header {
     opacity: 0;
     animation: titlePop 0.5s cubic-bezier(0.1, 0.9, 0.2, 1) 0.2s forwards;
     box-shadow: -8px 8px 0px rgba(27, 19, 177, 0.5);
-    z-index: 100;
+    z-index: 1000;
 }
 
 .theme-toggle:hover {
@@ -79,6 +85,19 @@ header {
     background-color: #ffffff;
     color: #1b13b1;
     border-color: #1b13b1;
+}
+
+body[data-theme="light"] .theme-toggle {
+    background-color: #000000;
+    border-color: #1b13b1;
+    color: #ffffff;
+    box-shadow: -8px 8px 0px rgba(27, 19, 177, 0.3);
+}
+
+body[data-theme="light"] .theme-toggle:hover {
+    background-color: #1b13b1;
+    color: #ffffff;
+    box-shadow: -12px 12px 0px #000000;
 }
 
 .theme-toggle:active {
@@ -299,78 +318,51 @@ main {
     100% { opacity: 1; transform: translateY(0) rotate(-1.5deg); }
 }
 
-@media (prefers-color-scheme: light) {
- 
-    body {
-        background-color: #f4f1ea; 
-        color: #000000;
-    }
+/* Light mode theme - activated via data-theme attribute */
+body[data-theme="light"] .p5-title {
+    background-color: #000000;
+    color: #ffffff;
+}
 
+body[data-theme="light"] .p5-card {
+    box-shadow: -12px 12px 0px #000000, -12px 12px 0px 2px #1b13b1;
+}
 
-    .p5-title {
-        background-color: #000000;
-        color: #ffffff;
-    }
+body[data-theme="light"] .socials-card {
+    background-color: #ffffff;
+    color: #000000;
+    box-shadow: 12px 12px 0px #1b13b1;
+}
 
+body[data-theme="light"] .p5-badge {
+    background-color: #ffffff;
+    color: #000000;
+    border: 2px solid #000000;
+}
 
-    .p5-card {
-        box-shadow: -12px 12px 0px #000000, -12px 12px 0px 2px #1b13b1;
-    }
+body[data-theme="light"] .p5-badge.red {
+    background-color: #1b13b1;
+    color: #ffffff;
+    border-color: #1b13b1;
+}
 
-    .socials-card {
-        background-color: #ffffff;
-        color: #000000;
-        box-shadow: 12px 12px 0px #1b13b1;
-    }
+body[data-theme="light"] .p5-link {
+    background-color: #ffffff;
+    color: #000000;
+    border: 3px solid #000000;
+}
 
-  
-    .p5-badge {
-        background-color: #ffffff;
-        color: #000000;
-        border: 2px solid #000000;
-    }
+body[data-theme="light"] .p5-link:hover {
+    background-color: #1b13b1;
+    color: #ffffff;
+    border-color: #1b13b1;
+    box-shadow: -8px 8px 0px #000000;
+}
 
+body[data-theme="light"] .p5-footer {
+    color: #1b13b1;
+}
 
-    .p5-badge.red {
-        background-color: #1b13b1;
-        color: #ffffff;
-        border-color: #1b13b1;
-    }
-
-
-    .p5-link {
-        background-color: #ffffff;
-        color: #000000;
-        border: 3px solid #000000;
-    }
-
-    .p5-link:hover {
-        background-color: #1b13b1;
-        color: #ffffff;
-        border-color: #1b13b1;
-        box-shadow: -8px 8px 0px #000000;
-    }
-    
-
-    .p5-footer {
-        color: #1b13b1;
-    }
-
-
-    .p5-hint {
-        color: #000000;
-    }
-
-    .theme-toggle {
-        background-color: #000000;
-        border-color: #1b13b1;
-        color: #ffffff;
-        box-shadow: -8px 8px 0px rgba(27, 19, 177, 0.3);
-    }
-
-    .theme-toggle:hover {
-        background-color: #1b13b1;
-        color: #ffffff;
-        box-shadow: -12px 12px 0px #000000;
-    }
+body[data-theme="light"] .p5-hint {
+    color: #000000;
 }
