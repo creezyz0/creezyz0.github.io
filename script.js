@@ -2,13 +2,23 @@
 document.addEventListener('DOMContentLoaded', () => {
     const themeToggle = document.getElementById('themeToggle');
     const themeIcon = document.querySelector('.theme-icon');
-    const html = document.documentElement;
     
-    // Get saved theme from localStorage
-    const savedTheme = localStorage.getItem('theme') || 'dark';
+    // Check if user has manually set a preference
+    const savedTheme = localStorage.getItem('theme');
+    
+    // If no manual preference, use system preference
+    let initialTheme;
+    if (savedTheme) {
+        initialTheme = savedTheme;
+    } else {
+        // Use system preference (dark is default if not available)
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+        initialTheme = prefersLight ? 'light' : 'dark';
+    }
     
     // Set initial theme
-    setTheme(savedTheme);
+    setTheme(initialTheme);
     
     // Toggle theme on button click
     themeToggle.addEventListener('click', () => {
