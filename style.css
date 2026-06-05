@@ -33,6 +33,7 @@ header {
     transform: rotate(-3deg);
     opacity: 0; 
     animation: titlePop 0.5s cubic-bezier(0.1, 0.9, 0.2, 1) 0.2s forwards;
+    position: relative;
 }
 
 .p5-title {
@@ -46,6 +47,51 @@ header {
     /* Macht die Box unregelmäßig/kantig */
     clip-path: polygon(0% 15%, 100% 0%, 95% 85%, 5% 100%);
     box-shadow: -10px 10px 0px #1b13b1;
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    position: absolute;
+    top: 50px;
+    right: 20px;
+    background-color: #1b13b1;
+    border: 3px solid #ffffff;
+    color: #ffffff;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    transition: all 0.3s ease-out;
+    transform: rotate(-8deg);
+    opacity: 0;
+    animation: titlePop 0.5s cubic-bezier(0.1, 0.9, 0.2, 1) 0.2s forwards;
+    box-shadow: -8px 8px 0px rgba(27, 19, 177, 0.5);
+    z-index: 100;
+}
+
+.theme-toggle:hover {
+    transform: rotate(8deg) scale(1.15);
+    box-shadow: -12px 12px 0px #1b13b1;
+    background-color: #ffffff;
+    color: #1b13b1;
+    border-color: #1b13b1;
+}
+
+.theme-toggle:active {
+    transform: rotate(0deg) scale(0.95);
+}
+
+.theme-icon {
+    display: inline-block;
+    transition: transform 0.3s ease-out;
+}
+
+.theme-toggle:hover .theme-icon {
+    transform: rotate(20deg) scale(1.2);
 }
 
 
@@ -313,5 +359,18 @@ main {
 
     .p5-hint {
         color: #000000;
+    }
+
+    .theme-toggle {
+        background-color: #000000;
+        border-color: #1b13b1;
+        color: #ffffff;
+        box-shadow: -8px 8px 0px rgba(27, 19, 177, 0.3);
+    }
+
+    .theme-toggle:hover {
+        background-color: #1b13b1;
+        color: #ffffff;
+        box-shadow: -12px 12px 0px #000000;
     }
 }
