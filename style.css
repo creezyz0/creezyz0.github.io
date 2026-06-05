@@ -321,19 +321,54 @@ main {
 }
 
 /* Light mode theme - activated via data-theme attribute */
+body[data-theme="light"] {
+    background-color: #f4f1ea;
+    color: #000000;
+}
+
+body[data-theme="light"] .bg-stripe {
+    background-color: #1b13b1;
+}
+
 body[data-theme="light"] .p5-title {
     background-color: #000000;
     color: #ffffff;
 }
 
 body[data-theme="light"] .p5-card {
+    background-color: #ffffff;
+    color: #000000;
     box-shadow: -12px 12px 0px #000000, -12px 12px 0px 2px #1b13b1;
+}
+
+body[data-theme="light"] .main-card {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+body[data-theme="light"] .projects-card {
+    background-color: #ffffff;
+    color: #000000;
+    box-shadow: -10px -10px 0px #1b13b1;
+}
+
+body[data-theme="light"] .project-placeholder {
+    background-color: #f9f9f9;
+    border-color: #1b13b1;
+}
+
+body[data-theme="light"] .project-placeholder h3 {
+    color: #1b13b1;
 }
 
 body[data-theme="light"] .socials-card {
     background-color: #ffffff;
     color: #000000;
     box-shadow: 12px 12px 0px #1b13b1;
+}
+
+body[data-theme="light"] .p5-card p {
+    color: #000000;
 }
 
 body[data-theme="light"] .p5-badge {
