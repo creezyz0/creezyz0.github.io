@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wort-Rätsel</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>Wort-Rätsel</h1>
+        <p id="message">Lade Wörter...</p>
+        
+        <!-- Hier werden die Unterstriche angezeigt -->
+        <div id="word-display">_ _ _ _ _</div>
+        
+        <div class="input-section">
+            <input type="text" id="guess-input" maxlength="1" placeholder="Buchstabe">
+            <button onclick="makeGuess()">Raten</button>
+        </div>
+        
+        <p id="attempts-display">Versuche übrig: 10</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
