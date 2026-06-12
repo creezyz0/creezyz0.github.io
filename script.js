@@ -1,4 +1,25 @@
 
+
+// Appwrite Initialisierung
+const { Client, Account, Databases } = Appwrite;
+
+const client = new Client()
+    .setEndpoint("https://fra.cloud.appwrite.io/v1")
+    .setProject("6a2c479b0029c79209c6");
+
+const account = new Account(client);
+const databases = new Databases(client);
+
+// Ping-Funktion zur Verifizierung
+client.ping().then(() => {
+    console.log("Appwrite Verbindung: Aktiv und bereit.");
+}).catch((error) => {
+    console.error("Appwrite Verbindung fehlgeschlagen:", error);
+});
+
+// Dein bestehender Code geht hier weiter...
+document.addEventListener('DOMContentLoaded', () => {
+    // ... dein restlicher Code
 document.addEventListener('DOMContentLoaded', () => {
     const themeToggle = document.getElementById('themeToggle');
     const themeIcon = document.querySelector('.theme-icon');
