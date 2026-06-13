@@ -50,32 +50,53 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// TOGGLE ABOUT SECTION
+function toggleAbout() {
+    const aboutSection = document.getElementById('aboutSection');
+    if (aboutSection) {
+        aboutSection.classList.toggle('active');
+    }
+}
+
+// TOGGLE CONNECT SECTION
+function toggleConnect() {
+    const connectSection = document.getElementById('connectSection');
+    if (connectSection) {
+        connectSection.classList.toggle('active');
+    }
+}
+
 // Funktionen für das Wordle Modal
 function openWordleModal() {
     const modal = document.getElementById('wordleModal');
-    modal.style.display = 'flex';
-    
-    setTimeout(() => {
-        modal.classList.add('active');
-    }, 10);
-    
-    document.body.style.overflow = 'hidden'; 
+    if (modal) {
+        modal.style.display = 'flex';
+        
+        setTimeout(() => {
+            modal.classList.add('active');
+        }, 10);
+        
+        document.body.style.overflow = 'hidden'; 
+    }
 }
 
 function closeWordleModal() {
     const modal = document.getElementById('wordleModal');
-    modal.classList.remove('active');
-    
-    setTimeout(() => {
-        modal.style.display = 'none';
-    }, 200);
-    
-    document.body.style.overflow = ''; 
+    if (modal) {
+        modal.classList.remove('active');
+        
+        setTimeout(() => {
+            modal.style.display = 'none';
+        }, 200);
+        
+        document.body.style.overflow = ''; 
+    }
 }
 
+// Close modal when clicking outside
 window.onclick = function(event) {
     const modal = document.getElementById('wordleModal');
-    if (event.target == modal) {
+    if (modal && event.target == modal) {
         closeWordleModal();
     }
 }

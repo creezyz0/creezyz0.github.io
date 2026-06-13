@@ -101,7 +101,12 @@ header {
     letter-spacing: 2px;
     display: inline-block;
     clip-path: polygon(0% 15%, 100% 0%, 95% 85%, 5% 100%);
-    box-shadow: -10px 10px 0px #1b13b1; /* Schatten ist Blau */
+    box-shadow: -10px 10px 0px #1b13b1;
+}
+
+.p5-title-link {
+    text-decoration: none;
+    display: inline-block;
 }
 
 /* =========================================
@@ -121,7 +126,6 @@ main {
     color: #000000;
     padding: 30px 40px;
     position: relative;
-    /* Alle Karten-Schatten sind jetzt IMMER Blau */
     box-shadow: -12px 12px 0px #1b13b1;
 }
 
@@ -140,23 +144,6 @@ main {
     animation: cardTwoFadeIn 0.5s ease-out 0.6s forwards;
 }
 
-.project-placeholder {
-    border: 4px dashed #1b13b1;
-    padding: 30px 20px;
-    text-align: center;
-    margin-top: 35px;
-    transform: skewX(-3deg);
-    background-color: #f9f9f9;
-}
-
-.project-placeholder h3 {
-    font-family: 'Impact', sans-serif;
-    color: #1b13b1;
-    font-size: 2rem;
-    margin: 0 0 10px 0;
-    letter-spacing: 3px;
-}
-
 .socials-card {
     transform: rotate(-1.5deg);
     background-color: #1a1a1a;
@@ -168,13 +155,113 @@ main {
 }
 
 /* =========================================
-   BADGES (Schilder) - Jetzt alle Blau!
+   NAVIGATION BUTTONS (Landing Page)
+   ========================================= */
+.nav-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    opacity: 0;
+    animation: navButtonsFadeIn 0.5s ease-out 0.4s forwards;
+}
+
+.nav-btn {
+    font-size: 1.8rem;
+    color: #ffffff;
+    text-decoration: none;
+    background-color: #1a1a1a;
+    padding: 15px 30px;
+    display: block;
+    width: 100%;
+    text-align: center;
+    transition: all 0.15s ease-out;
+    border: 3px solid #ffffff;
+    position: relative;
+    z-index: 1;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.nav-btn:hover {
+    background-color: #ffffff;
+    color: #000000;
+    transform: scale(1.1) rotate(2deg);
+    border-color: #1b13b1;
+    box-shadow: -8px 8px 0px #1b13b1;
+    z-index: 10;
+}
+
+.nav-btn:active {
+    transform: scale(0.95);
+}
+
+.nav-btn-projects {
+    background-color: #1b13b1;
+}
+
+.nav-btn-projects:hover {
+    background-color: #ffffff;
+    color: #1b13b1;
+}
+
+body[data-theme="light"] .nav-btn {
+    background-color: #ffffff;
+    color: #000000;
+    border-color: #000000;
+}
+
+body[data-theme="light"] .nav-btn:hover {
+    background-color: #000000;
+    color: #ffffff;
+    border-color: #1b13b1;
+}
+
+body[data-theme="light"] .nav-btn-projects {
+    background-color: #1b13b1;
+    color: #ffffff;
+}
+
+body[data-theme="light"] .nav-btn-projects:hover {
+    background-color: #ffffff;
+    color: #1b13b1;
+}
+
+/* =========================================
+   COLLAPSIBLE SECTIONS (Hidden by default)
+   ========================================= */
+.collapsible {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.1, 0.9, 0.2, 1), padding 0.5s ease-out, opacity 0.5s ease-out;
+    opacity: 0;
+    padding: 0 !important;
+}
+
+.collapsible.active {
+    max-height: 2000px;
+    opacity: 1;
+    padding: 30px 40px !important;
+}
+
+/* =========================================
+   BACK BUTTON
+   ========================================= */
+.back-button {
+    opacity: 0;
+    animation: navButtonsFadeIn 0.5s ease-out 0.4s forwards;
+}
+
+/* =========================================
+   BADGES (Schilder)
    ========================================= */
 .p5-badge {
     position: absolute;
     top: -25px;
     left: 15px;
-    /* Hintergrundfarbe geändert von Schwarz auf Blau */
     background-color: #1b13b1;
     color: #ffffff;
     padding: 5px 20px;
@@ -292,72 +379,9 @@ main {
     100% { opacity: 1; transform: translateY(0) rotate(-1.5deg); }
 }
 
-/* =========================================
-   MOBILE ANPASSUNGEN (Handy-Ansicht)
-   ========================================= */
-@media (max-width: 600px) {
-    /* Aus dem 2x2 Raster wird eine 1er-Spalte (untereinander) */
-    .p5-list {
-        grid-template-columns: 1fr;
-    }
-    
-    /* Der Titel wird etwas kleiner, damit er aufs Handy passt */
-    .p5-title {
-        font-size: 3.5rem;
-    }
-    
-    /* Die Kartenabstände werden für Handys etwas enger gemacht */
-   .p5-card {
-        padding: 45px 20px 25px 20px; 
-    }
-}
-
-/* =========================================
-   LIGHT MODE ANPASSUNGEN
-   ========================================= */
-
-/* Der Theme-Toggle Button bekommt im Light-Mode nur einen schwarzen Rahmen, bleibt aber Blau! */
-body[data-theme="light"] .theme-toggle {
-    border-color: #000000;
-}
-
-body[data-theme="light"] .theme-toggle:hover {
-    background-color: #000000;
-    color: #ffffff;
-    border-color: #1b13b1;
-    box-shadow: -8px 8px 0px #1b13b1;
-}
-
-body[data-theme="light"] .p5-title {
-    background-color: #000000;
-    color: #ffffff;
-}
-
-
-body[data-theme="light"] .socials-card {
-    background-color: #ffffff;
-    color: #000000;
-}
-
-body[data-theme="light"] .p5-link {
-    background-color: #ffffff; 
-    color: #000000;          
-    border: 3px solid #000000; 
-}
-
-body[data-theme="light"] .p5-link:hover {
-    background-color: #000000; 
-    color: #ffffff;           
-    border-color: #000000;     
-    box-shadow: -8px 8px 0px #1b13b1; 
-}
-
-body[data-theme="light"] .p5-footer {
-    color: #000000;
-}
-
-body[data-theme="light"] .p5-hint {
-    color: #000000;
+@keyframes navButtonsFadeIn {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
 }
 
 /* =========================================
@@ -417,7 +441,7 @@ body[data-theme="light"] .project-btn {
    MODAL (POP-UP)
    ========================================= */
 .modal-overlay {
-    display: none; /* Standardmäßig versteckt */
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
@@ -434,7 +458,7 @@ body[data-theme="light"] .project-btn {
 .modal-content {
     width: 90%;
     max-width: 400px;
-    transform: rotate(1deg); /* Leicht schräg, passend zum Design */
+    transform: rotate(1deg);
 }
 
 .modal-buttons {
@@ -471,4 +495,81 @@ body[data-theme="light"] .project-btn {
 
 @keyframes fadeIn {
     to { opacity: 1; }
+}
+
+/* =========================================
+   MOBILE ANPASSUNGEN
+   ========================================= */
+@media (max-width: 600px) {
+    .p5-list {
+        grid-template-columns: 1fr;
+    }
+    
+    .p5-title {
+        font-size: 3.5rem;
+    }
+    
+    .p5-card {
+        padding: 45px 20px 25px 20px; 
+    }
+
+    .nav-btn {
+        font-size: 1.5rem;
+        padding: 12px 20px;
+    }
+}
+
+/* =========================================
+   LIGHT MODE ANPASSUNGEN
+   ========================================= */
+body[data-theme="light"] .theme-toggle {
+    border-color: #000000;
+}
+
+body[data-theme="light"] .theme-toggle:hover {
+    background-color: #000000;
+    color: #ffffff;
+    border-color: #1b13b1;
+    box-shadow: -8px 8px 0px #1b13b1;
+}
+
+body[data-theme="light"] .p5-title {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+body[data-theme="light"] .socials-card {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+body[data-theme="light"] .p5-link {
+    background-color: #ffffff; 
+    color: #000000;          
+    border: 3px solid #000000; 
+}
+
+body[data-theme="light"] .p5-link:hover {
+    background-color: #000000; 
+    color: #ffffff;           
+    border-color: #000000;     
+    box-shadow: -8px 8px 0px #1b13b1; 
+}
+
+body[data-theme="light"] .p5-footer {
+    color: #000000;
+}
+
+body[data-theme="light"] .p5-hint {
+    color: #000000;
+}
+
+body[data-theme="light"] .main-card {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+body[data-theme="light"] .projects-card {
+    background-color: #ffffff;
+    color: #000000;
 }

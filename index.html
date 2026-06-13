@@ -4,17 +4,16 @@
     <script type="module" src="script.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ABOUT | creezyz</title>
+    <title>CREEZYZ</title>
     <link href="https://fonts.googleapis.com/css2?family=Impact&family=Permanent+Marker&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
-           <span class="theme-icon">🌙</span>
-        </button>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+        <span class="theme-icon">🌙</span>
+    </button>
 
-   
     <div class="bg-stripe"></div>
 
     <header>
@@ -22,8 +21,21 @@
     </header>
 
     <main>
-   
-        <section class="p5-card main-card">
+        <!-- NAVIGATION BUTTONS -->
+        <div class="nav-buttons">
+            <button class="nav-btn" onclick="toggleAbout()">
+                <span class="nav-btn-text">ABOUT ME</span>
+            </button>
+            <button class="nav-btn" onclick="toggleConnect()">
+                <span class="nav-btn-text">CONNECT</span>
+            </button>
+            <button class="nav-btn nav-btn-projects" onclick="window.location.href='projects.html'">
+                <span class="nav-btn-text">PROJECTS</span>
+            </button>
+        </div>
+
+        <!-- ABOUT ME SECTION (Hidden by default) -->
+        <section class="p5-card main-card collapsible" id="aboutSection">
             <h2 class="p5-badge">ABOUT ME</h2>
             <p>
                 Hi, I'm Rick, known online as <strong>creezyz</strong>. I'm a 9th-grade student from the Chemnitz area in Germany. 
@@ -34,19 +46,8 @@
             </p>
         </section>
 
-      <section class="p5-card projects-card">
-            <h2 class="p5-badge">PROJECTS</h2>
-            
-            <!-- Neues Projekt: Wordle -->
-            <div class="project-item" onclick="openWordleModal()">
-                <h3>WORDLE (DE)</h3>
-                <p>Ein selbstprogrammierter Klon des beliebten Wort-Rätsels. Spiele es direkt im Browser oder schau dir an, wie es funktioniert.</p>
-                <div class="project-btn">PROJEKT ÖFFNEN</div>
-            </div>
-        </section>
-
-
-        <section class="p5-card socials-card">
+        <!-- CONNECT SECTION (Hidden by default) -->
+        <section class="p5-card socials-card collapsible" id="connectSection">
             <h2 class="p5-badge red">CONNECT</h2>
             <ul class="p5-list">
                 <li><a href="https://chess.com/member/creezyz" target="_blank" rel="noopener noreferrer" class="p5-link">CHESS.COM</a></li>
@@ -55,30 +56,14 @@
                 <li><a href="https://tiktok.com/@kms.rick" target="_blank" rel="noopener noreferrer" class="p5-link">TIKTOK</a></li>
                 <li><a href="mailto:rs2010@magenta.de" class="p5-link">MAIL</a></li>
             </ul>
-        </section> 
+        </section>
     </main>
 
     <footer>
         <p class="p5-footer"> © 2026 CREEZYZ</p>
         <p class="p5-hint">[ SYSTEM HINT: Toggle your device's light/dark mode to change the reality ]</p>
     </footer>
-    <div id="wordleModal" class="modal-overlay">
-        <div class="modal-content p5-card">
-            <h2 class="p5-badge">WORDLE (DE)</h2>
-            <p><strong>Systemzugriff gewährt.</strong> Was möchtest du tun?</p>
-            
-            <div class="modal-buttons">
-                <!-- Ersetze "wordle.html" mit dem echten Pfad zu deinem Spiel, falls es in einem Unterordner liegt -->
-               <a href="wordle/wordle.html" class="p5-link">SPIELEN</a>
-                <p class="modal-desc">Führe das Programm direkt im Browser aus.</p>
-                
-                <a href="https://github.com/creezyz/wordle" target="_blank" rel="noopener noreferrer" class="p5-link">SOURCE CODE</a>
-                <p class="modal-desc">Analysiere den Code auf GitHub.</p>
-            </div>
-            
-            <button class="close-btn" onclick="closeWordleModal()">ABBRECHEN</button>
-        </div>
-    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
