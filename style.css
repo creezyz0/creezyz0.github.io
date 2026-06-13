@@ -157,10 +157,10 @@ main {
 /* =========================================
    NAVIGATION BUTTONS (Landing Page)
    ========================================= */
-.nav-buttons {
+.button-section-group {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 0;
     width: 100%;
     opacity: 0;
     animation: navButtonsFadeIn 0.5s ease-out 0.4s forwards;
@@ -201,6 +201,9 @@ main {
 
 .nav-btn-projects {
     background-color: #1b13b1;
+    margin: 20px 0;
+    opacity: 0;
+    animation: navButtonsFadeIn 0.5s ease-out 0.5s forwards;
 }
 
 .nav-btn-projects:hover {
