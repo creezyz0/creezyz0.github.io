@@ -162,7 +162,6 @@ main {
     flex-direction: column;
     gap: 0;
     width: 100%;
-    align-items: center;
     opacity: 0;
     animation: navButtonsFadeIn 0.5s ease-out 0.4s forwards;
 }
@@ -173,7 +172,8 @@ main {
     text-decoration: none;
     background-color: #000000;
     padding: 10px 20px;
-    display: inline-block;
+    display: block;
+    width: 100%;
     text-align: center;
     transition: all 0.15s ease-out;
     border: 3px solid #ffffff;
@@ -202,7 +202,7 @@ main {
 }
 
 .nav-btn-projects {
-    background-color: #000000;
+    background-color: #1b13b1;
     margin: 20px 0;
     opacity: 0;
     animation: navButtonsFadeIn 0.5s ease-out 0.5s forwards;
@@ -210,7 +210,7 @@ main {
 
 .nav-btn-projects:hover {
     background-color: #ffffff;
-    color: #000000;
+    color: #1b13b1;
     border-color: #1b13b1;
 }
 
@@ -228,14 +228,14 @@ body[data-theme="light"] .nav-btn:hover {
 }
 
 body[data-theme="light"] .nav-btn-projects {
-    background-color: #000000;
+    background-color: #1b13b1;
     color: #ffffff;
     border-color: #1b13b1;
 }
 
 body[data-theme="light"] .nav-btn-projects:hover {
     background-color: #ffffff;
-    color: #000000;
+    color: #1b13b1;
     border-color: #1b13b1;
 }
 
