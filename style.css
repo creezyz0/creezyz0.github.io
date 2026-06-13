@@ -155,7 +155,7 @@ main {
 }
 
 /* =========================================
-   NAVIGATION BUTTONS (Landing Page)
+   NAVIGATION BUTTONS (Landing Page - Connect Style)
    ========================================= */
 .button-section-group {
     display: flex;
@@ -170,8 +170,8 @@ main {
     font-size: 1.8rem;
     color: #ffffff;
     text-decoration: none;
-    background-color: #1a1a1a;
-    padding: 15px 30px;
+    background-color: #000000;
+    padding: 10px 20px;
     display: block;
     width: 100%;
     text-align: center;
@@ -181,22 +181,24 @@ main {
     z-index: 1;
     box-sizing: border-box;
     cursor: pointer;
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: 'Impact', 'Bebas Neue', sans-serif;
     letter-spacing: 2px;
     text-transform: uppercase;
+    transform: skewX(-10deg);
 }
 
 .nav-btn:hover {
     background-color: #ffffff;
     color: #000000;
-    transform: scale(1.1) rotate(2deg);
+    transform: scale(1.1) rotate(4deg) skewX(5deg);
     border-color: #1b13b1;
     box-shadow: -8px 8px 0px #1b13b1;
+    letter-spacing: 2px;
     z-index: 10;
 }
 
 .nav-btn:active {
-    transform: scale(0.95);
+    transform: scale(0.95) skewX(-10deg);
 }
 
 .nav-btn-projects {
@@ -209,6 +211,7 @@ main {
 .nav-btn-projects:hover {
     background-color: #ffffff;
     color: #1b13b1;
+    border-color: #1b13b1;
 }
 
 body[data-theme="light"] .nav-btn {
@@ -221,16 +224,19 @@ body[data-theme="light"] .nav-btn:hover {
     background-color: #000000;
     color: #ffffff;
     border-color: #1b13b1;
+    box-shadow: -8px 8px 0px #1b13b1;
 }
 
 body[data-theme="light"] .nav-btn-projects {
     background-color: #1b13b1;
     color: #ffffff;
+    border-color: #1b13b1;
 }
 
 body[data-theme="light"] .nav-btn-projects:hover {
     background-color: #ffffff;
     color: #1b13b1;
+    border-color: #1b13b1;
 }
 
 /* =========================================
