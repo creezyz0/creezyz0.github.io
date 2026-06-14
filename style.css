@@ -656,44 +656,67 @@ footer {
    ========================================= */
 @media (max-width: 600px) {
   header {
-    margin-top: 50px;
+    margin-top: 40px;
+  }
+
+  main {
+    gap: 20px;
   }
 
   .p5-title {
-    gap: 1px;
-    padding: 8px 10px;
+    gap: 2px;
+    padding: 6px 8px;
+    transform: scale(0.65);
+    transform-origin: top center;
   }
 
   .p5-title-letter {
-    font-size: 2.4rem !important;
-    padding: 1px 4px;
+    padding: 1px 5px !important;
   }
 
-  .p5-card {
-    padding: 30px 20px;
-  }
-
-  .collapsible {
-    padding: 0 20px !important;
-  }
-
-  .collapsible.active {
-    padding: 30px 20px !important;
-  }
-
-  .p5-list {
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
-
-  .p5-link {
-    font-size: 1.2rem;
+  .button-section-group {
+    animation: fadeSlideIn 0.5s ease-out forwards;
   }
 
   .nav-btn {
     font-size: 1.3rem;
-    padding: 10px 20px;
+    padding: 10px 16px;
+    letter-spacing: 2px;
     width: 100%;
+  }
+
+  .nav-btn:hover {
+    letter-spacing: 3px;
+  }
+
+  .p5-card {
+    padding: 25px 16px;
+  }
+
+  .p5-card p {
+    font-size: 0.95rem;
+  }
+
+  .collapsible {
+    padding: 0 16px !important;
+  }
+
+  .collapsible.active {
+    padding: 25px 16px !important;
+  }
+
+  .p5-list {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .p5-link {
+    font-size: 1.1rem;
+    padding: 8px 12px;
+  }
+
+  .p5-link::after {
+    display: none;
   }
 
   .p5-badge {
@@ -703,20 +726,63 @@ footer {
     top: -16px;
   }
 
+  .project-item {
+    padding: 18px;
+  }
+
   .project-item h3 {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
+  }
+
+  .project-item p {
+    font-size: 0.85rem;
+  }
+
+  .project-btn {
+    font-size: 0.85rem;
+    padding: 6px 14px;
+  }
+
+  .modal-content {
+    padding: 25px 18px;
+  }
+
+  .modal-buttons .p5-link {
+    font-size: 1rem;
+  }
+
+  .close-btn {
+    font-size: 0.95rem;
+    padding: 8px;
+  }
+
+  .back-button .p5-link {
+    font-size: 0.95rem;
+    padding: 6px 12px;
+    max-width: 120px !important;
+  }
+
+  .p5-footer {
+    font-size: 1rem;
+  }
+
+  .p5-hint {
+    font-size: 0.6rem;
+  }
+
+  .theme-toggle {
+    top: 12px;
+    right: 12px;
+    width: 40px;
+    height: 40px;
+    font-size: 1.1rem;
   }
 }
 
 @media (min-width: 601px) and (max-width: 1024px) {
-  .p5-title-letter {
-    font-size: 3.5rem !important;
-  }
-}
-
-@media (min-width: 1025px) {
-  .p5-title-letter {
-    font-size: 4.5rem !important;
+  .p5-title {
+    transform: scale(0.82);
+    transform-origin: top center;
   }
 }
 
