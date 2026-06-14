@@ -668,6 +668,7 @@ footer {
     padding: 6px 8px;
     transform: scale(0.65);
     transform-origin: top center;
+    flex-wrap: nowrap;
   }
 
   .p5-title-letter {
