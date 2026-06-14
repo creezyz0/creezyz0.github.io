@@ -1,584 +1,794 @@
 /* =========================================
-   BASIS & HINTERGRUND
+   PERSONA 5 ROYAL — COMPLETE REDESIGN
    ========================================= */
-body {
-    background-color: #000000;
-    color: #ffffff;
-    font-family: 'Impact', 'Bebas Neue', 'Arial Black', sans-serif;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: background-color 0.3s ease; 
-}
 
-body[data-theme="light"] {
-    background-color: #f4f1ea;
-    color: #000000;
-}
-
-
-.bg-stripe {
-    position: fixed;
-    top: -50%;
-    left: -10%;
-    width: 30%;
-    height: 200%;
-    background-color: #1b13b1; 
-    transform: rotate(15deg);
-    z-index: -1;
-    box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
-    animation: swipeIn 0.6s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
-    transition: background-color 0.3s ease;
+:root {
+  --p5-black: #000000;
+  --p5-white: #ffffff;
+  --p5-red: #D30000;
+  --p5-red-dark: #9E0000;
+  --p5-red-glow: rgba(211, 0, 0, 0.4);
+  --p5-gray: #1a1a1a;
+  --p5-light-gray: #2a2a2a;
+  --p5-font-impact: 'Impact', 'Arial Black', sans-serif;
+  --p5-font-title: 'Impact', 'Arial Black', sans-serif;
+  --p5-font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --p5-font-mono: 'Courier New', monospace;
+  --p5-shadow-red: 8px 8px 0px var(--p5-red);
+  --p5-shadow-black: 8px 8px 0px var(--p5-black);
+  --p5-transition: 0.15s cubic-bezier(0.1, 0.9, 0.2, 1);
 }
 
 /* =========================================
-   THEME TOGGLE BUTTON (Fest Oben Rechts)
+   BASE
+   ========================================= */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--p5-black);
+  color: var(--p5-white);
+  font-family: var(--p5-font-impact);
+  overflow-x: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+/* =========================================
+   ANIMATED PARTICLE BACKGROUND
+   ========================================= */
+#particleCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* =========================================
+   DIAGONAL STRIPES OVERLAY
+   ========================================= */
+.bg-stripes {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.bg-stripes::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  left: -10%;
+  width: 60%;
+  height: 140%;
+  background: repeating-linear-gradient(
+    -25deg,
+    transparent,
+    transparent 40px,
+    rgba(211, 0, 0, 0.04) 40px,
+    rgba(211, 0, 0, 0.04) 42px
+  );
+  animation: stripesMove 20s linear infinite;
+}
+
+.bg-stripes::after {
+  content: '';
+  position: absolute;
+  bottom: -10%;
+  right: -10%;
+  width: 50%;
+  height: 60%;
+  background: repeating-linear-gradient(
+    25deg,
+    transparent,
+    transparent 30px,
+    rgba(211, 0, 0, 0.03) 30px,
+    rgba(211, 0, 0, 0.03) 32px
+  );
+  animation: stripesMove 25s linear infinite reverse;
+}
+
+@keyframes stripesMove {
+  0% { transform: translateX(0) translateY(0); }
+  100% { transform: translateX(40px) translateY(20px); }
+}
+
+/* =========================================
+   RED ACCENT BAR (top)
+   ========================================= */
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--p5-red);
+  z-index: 100;
+  box-shadow: 0 0 20px var(--p5-red-glow);
+}
+
+.top-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--p5-red);
+  animation: barPulse 3s ease-in-out infinite;
+}
+
+@keyframes barPulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 20px var(--p5-red-glow); }
+  50% { opacity: 0.6; box-shadow: 0 0 40px var(--p5-red-glow); }
+}
+
+/* =========================================
+   THEME TOGGLE
    ========================================= */
 .theme-toggle {
-    position: fixed; 
-    top: 20px;
-    right: 20px;
-    background-color: #1b13b1;
-    border: 3px solid #ffffff;
-    color: #ffffff;
-    width: 55px;
-    height: 55px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.8rem;
-    transition: all 0.2s ease-out;
-    clip-path: polygon(5% 0%, 100% 5%, 95% 100%, 0% 95%);
-    box-shadow: -6px 6px 0px #1b13b1;
-    z-index: 1000;
-    opacity: 0;
-    animation: titlePop 0.5s cubic-bezier(0.1, 0.9, 0.2, 1) 0.2s forwards;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  width: 50px;
+  height: 50px;
+  background: var(--p5-black);
+  border: 2px solid var(--p5-white);
+  color: var(--p5-white);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  transition: all var(--p5-transition);
+  clip-path: polygon(10% 0%, 100% 10%, 90% 100%, 0% 90%);
+  opacity: 0;
+  animation: fadeSlideIn 0.5s ease-out 0.3s forwards;
 }
 
 .theme-toggle:hover {
-    transform: scale(1.15) rotate(-10deg);
-    background-color: #ffffff;
-    color: #1b13b1;
-    border-color: #1b13b1;
-    box-shadow: -8px 8px 0px #1b13b1;
-}
-
-.theme-toggle:active {
-    transform: scale(0.95);
+  background: var(--p5-red);
+  border-color: var(--p5-red);
+  transform: scale(1.1) rotate(-5deg);
+  box-shadow: 0 0 20px var(--p5-red-glow);
 }
 
 .theme-icon {
-    display: inline-block;
-    transition: transform 0.3s ease-out;
+  display: inline-block;
+  transition: transform 0.3s ease-out;
 }
 
 .theme-toggle:hover .theme-icon {
-    transform: rotate(20deg) scale(1.2);
+  transform: rotate(30deg) scale(1.2);
 }
 
 /* =========================================
-   HEADER & TITEL
+   HEADER / RANSOM NOTE TITLE
    ========================================= */
 header {
-    margin-top: 50px;
-    margin-bottom: 20px;
-    transform: rotate(-3deg);
-    opacity: 0; 
-    animation: titlePop 0.5s cubic-bezier(0.1, 0.9, 0.2, 1) 0.2s forwards;
+  position: relative;
+  z-index: 10;
+  margin-top: 60px;
+  margin-bottom: 10px;
+  text-align: center;
 }
 
 .p5-title {
-    font-size: 4.5rem;
-    background-color: #ffffff;
-    color: #000000;
-    padding: 10px 30px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    display: inline-block;
-    clip-path: polygon(0% 15%, 100% 0%, 95% 85%, 5% 100%);
-    box-shadow: -10px 10px 0px #1b13b1;
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2px;
+  padding: 10px 15px;
+  position: relative;
+  max-width: 90vw;
 }
 
-.p5-title-link {
-    text-decoration: none;
-    display: inline-block;
+.p5-title-letter {
+  display: inline-block;
+  font-family: var(--p5-font-title);
+  text-transform: uppercase;
+  font-weight: 900;
+  line-height: 1;
+  padding: 2px 6px;
+  transition: all var(--p5-transition);
+  cursor: default;
+}
+
+.p5-title-letter:hover {
+  color: var(--p5-red) !important;
+  transform: scale(1.2) rotate(-5deg) !important;
 }
 
 /* =========================================
-   MAIN & KARTEN
+   MAIN
    ========================================= */
 main {
-    width: 90%;
-    max-width: 700px;
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-    padding: 20px;
-}
-
-.p5-card {
-    background-color: #ffffff;
-    color: #000000;
-    padding: 30px 40px;
-    position: relative;
-    box-shadow: -12px 12px 0px #1b13b1;
-}
-
-.main-card {
-    transform: rotate(2deg);
-    clip-path: polygon(2% 0%, 100% 3%, 98% 97%, 0% 100%);
-    opacity: 0;
-    animation: cardOneFadeIn 0.5s ease-out 0.4s forwards;
-}
-
-.projects-card {
-    transform: rotate(1.5deg);
-    box-shadow: -10px -10px 0px #1b13b1; 
-    clip-path: polygon(0% 0%, 98% 3%, 100% 100%, 3% 97%);
-    opacity: 0;
-    animation: cardTwoFadeIn 0.5s ease-out 0.6s forwards;
-}
-
-.socials-card {
-    transform: rotate(-1.5deg);
-    background-color: #1a1a1a;
-    color: #ffffff;
-    box-shadow: 12px 12px 0px #1b13b1;
-    clip-path: polygon(0% 3%, 97% 0%, 100% 97%, 3% 100%);
-    opacity: 0;
-    animation: cardThreeFadeIn 0.5s ease-out 0.8s forwards;
+  position: relative;
+  z-index: 10;
+  width: 90%;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 20px 0;
 }
 
 /* =========================================
-   NAVIGATION BUTTONS (Landing Page - Connect Style)
+   BUTTON SECTION GROUP
    ========================================= */
 .button-section-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    width: 100%;
-    align-items: center;
-    opacity: 0;
-    animation: navButtonsFadeIn 0.5s ease-out 0.4s forwards;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  opacity: 0;
+  animation: fadeSlideIn 0.5s ease-out forwards;
 }
 
+.button-section-group:nth-of-type(1) { animation-delay: 0.4s; }
+.button-section-group:nth-of-type(2) { animation-delay: 0.6s; }
+.button-section-group:nth-of-type(3) { animation-delay: 0.8s; }
+
+/* =========================================
+   NAV BUTTONS (P5R STYLE)
+   ========================================= */
 .nav-btn {
-    font-size: 1.8rem;
-    color: #ffffff;
-    text-decoration: none;
-    background-color: #000000;
-    padding: 10px 20px;
-    display: inline-block;
-    text-align: center;
-    transition: all 0.15s ease-out;
-    border: 3px solid #ffffff;
-    position: relative;
-    z-index: 1;
-    box-sizing: border-box;
-    cursor: pointer;
-    font-family: 'Impact', 'Bebas Neue', sans-serif;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    transform: skewX(-10deg);
+  font-family: var(--p5-font-impact);
+  font-size: 1.6rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--p5-white);
+  background: var(--p5-black);
+  border: 3px solid var(--p5-white);
+  padding: 12px 30px;
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+  position: relative;
+  transition: all var(--p5-transition);
+  transform: skewX(-8deg);
+  clip-path: polygon(4% 0%, 100% 0%, 96% 100%, 0% 100%);
+}
+
+.nav-btn::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  border: 2px solid var(--p5-red);
+  clip-path: polygon(4% 0%, 100% 0%, 96% 100%, 0% 100%);
+  opacity: 0;
+  transition: opacity var(--p5-transition);
 }
 
 .nav-btn:hover {
-    background-color: #ffffff;
-    color: #000000;
-    transform: scale(1.1) rotate(4deg) skewX(5deg);
-    border-color: #1b13b1;
-    box-shadow: -8px 8px 0px #1b13b1;
-    letter-spacing: 2px;
-    z-index: 10;
+  background: var(--p5-red);
+  border-color: var(--p5-red);
+  transform: scale(1.05) skewX(-5deg);
+  box-shadow: 0 0 30px var(--p5-red-glow);
+  letter-spacing: 5px;
+}
+
+.nav-btn:hover::before {
+  opacity: 1;
 }
 
 .nav-btn:active {
-    transform: scale(0.95) skewX(-10deg);
+  transform: scale(0.95) skewX(-8deg);
 }
 
-.nav-btn-projects {
-    background-color: #000000;
-    margin: 20px 0;
-    opacity: 0;
-    animation: navButtonsFadeIn 0.5s ease-out 0.5s forwards;
+.nav-btn span {
+  display: block;
+  transition: transform var(--p5-transition);
 }
 
-.nav-btn-projects:hover {
-    background-color: #ffffff;
-    color: #000000;
-    border-color: #1b13b1;
-}
-
-body[data-theme="light"] .nav-btn {
-    background-color: #ffffff;
-    color: #000000;
-    border-color: #000000;
-}
-
-body[data-theme="light"] .nav-btn:hover {
-    background-color: #000000;
-    color: #ffffff;
-    border-color: #1b13b1;
-    box-shadow: -8px 8px 0px #1b13b1;
-}
-
-body[data-theme="light"] .nav-btn-projects {
-    background-color: #000000;
-    color: #ffffff;
-    border-color: #1b13b1;
-}
-
-body[data-theme="light"] .nav-btn-projects:hover {
-    background-color: #ffffff;
-    color: #000000;
-    border-color: #1b13b1;
+.nav-btn:hover span {
+  transform: translateX(4px);
 }
 
 /* =========================================
-   COLLAPSIBLE SECTIONS (Hidden by default)
+   P5 CARDS (SECTIONS)
    ========================================= */
-.collapsible {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.5s cubic-bezier(0.1, 0.9, 0.2, 1), padding 0.5s ease-out, opacity 0.5s ease-out;
-    opacity: 0;
-    padding: 0 !important;
+.p5-card {
+  background: var(--p5-gray);
+  color: var(--p5-white);
+  padding: 35px 35px;
+  position: relative;
+  width: 100%;
+  margin-top: 5px;
 }
 
-.collapsible.active {
-    max-height: 2000px;
-    opacity: 1;
-    padding: 30px 40px !important;
+.main-card {
+  clip-path: polygon(2% 0%, 100% 2%, 98% 100%, 0% 98%);
+  border-left: 4px solid var(--p5-red);
 }
 
-/* =========================================
-   BACK BUTTON
-   ========================================= */
-.back-button {
-    opacity: 0;
-    animation: navButtonsFadeIn 0.5s ease-out 0.4s forwards;
-}
-
-/* =========================================
-   BADGES (Schilder)
-   ========================================= */
-.p5-badge {
-    position: absolute;
-    top: -25px;
-    left: 15px;
-    background-color: #1b13b1;
-    color: #ffffff;
-    padding: 5px 20px;
-    font-size: 1.8rem;
-    transform: rotate(-5deg);
-    border: 2px solid #1b13b1;
-}
-
-.p5-badge.red {
-    background-color: #1b13b1;
-    color: #ffffff;
-    border-color: #1b13b1;
+.socials-card {
+  clip-path: polygon(0% 2%, 98% 0%, 100% 98%, 2% 100%);
+  border-right: 4px solid var(--p5-red);
 }
 
 .p5-card p {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    font-size: 1.1rem;
-    line-height: 1.6;
-    font-weight: 500;
+  font-family: var(--p5-font-body);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  font-weight: 400;
+  margin: 12px 0;
+  letter-spacing: 0.3px;
 }
 
 /* =========================================
-   SOCIAL LINKS (2x2 Grid)
+   P5 BADGE
+   ========================================= */
+.p5-badge {
+  position: absolute;
+  top: -20px;
+  left: 20px;
+  background: var(--p5-red);
+  color: var(--p5-white);
+  font-family: var(--p5-font-impact);
+  font-size: 1.3rem;
+  letter-spacing: 3px;
+  padding: 6px 18px;
+  transform: rotate(-3deg) skewX(-5deg);
+  box-shadow: 4px 4px 0px var(--p5-black);
+  z-index: 5;
+  white-space: nowrap;
+}
+
+.p5-badge.red {
+  background: var(--p5-black);
+  border: 2px solid var(--p5-red);
+  box-shadow: 4px 4px 0px var(--p5-red);
+}
+
+/* =========================================
+   COLLAPSIBLE
+   ========================================= */
+.collapsible {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s cubic-bezier(0.1, 0.9, 0.2, 1),
+              padding 0.4s ease-out,
+              opacity 0.4s ease-out,
+              margin 0.4s ease-out;
+  opacity: 0;
+  padding: 0 35px !important;
+  margin: 0 !important;
+  border: none !important;
+}
+
+.collapsible.active {
+  max-height: 2000px;
+  opacity: 1;
+  padding: 35px 35px !important;
+  margin-top: 5px !important;
+}
+
+/* =========================================
+   SOCIAL LINKS
    ========================================= */
 .p5-list {
-    list-style: none;
-    padding: 0;
-    margin-top: 30px;
-    display: grid;
-    grid-template-columns: 1fr 1fr; 
-    gap: 20px;                      
+  list-style: none;
+  padding: 0;
+  margin: 25px 0 0 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
 }
 
 .p5-list li {
-    transform: skewX(-10deg);
-    display: flex;
+  display: flex;
+  transform: skewX(-6deg);
 }
 
 .p5-link {
-    font-size: 1.8rem; 
-    color: #ffffff;
-    text-decoration: none;
-    background-color: #000000;
-    padding: 10px 20px;
-    display: block;
-    width: 100%;      
-    text-align: center; 
-    transition: all 0.15s ease-out;
-    border: 3px solid #ffffff;
-    position: relative;
-    z-index: 1;
-    box-sizing: border-box;
+  font-family: var(--p5-font-impact);
+  font-size: 1.4rem;
+  letter-spacing: 2px;
+  color: var(--p5-white);
+  text-decoration: none;
+  background: var(--p5-black);
+  border: 2px solid var(--p5-white);
+  padding: 10px 15px;
+  display: block;
+  width: 100%;
+  text-align: center;
+  transition: all var(--p5-transition);
+  position: relative;
+  clip-path: polygon(3% 0%, 100% 0%, 97% 100%, 0% 100%);
+}
+
+.p5-link::after {
+  content: '▸';
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: all var(--p5-transition);
+  color: var(--p5-red);
 }
 
 .p5-link:hover {
-    background-color: #ffffff; 
-    color: #000000;            
-    transform: scale(1.1) rotate(4deg) skewX(5deg);
-    border-color: #1b13b1;    
-    box-shadow: -8px 8px 0px #1b13b1; 
-    letter-spacing: 2px;
-    z-index: 10;
+  background: var(--p5-red);
+  border-color: var(--p5-red);
+  transform: scale(1.05) skewX(-3deg);
+  box-shadow: 0 0 25px var(--p5-red-glow);
+  letter-spacing: 4px;
+  padding-left: 20px;
+}
+
+.p5-link:hover::after {
+  opacity: 1;
+  right: 12px;
 }
 
 /* =========================================
    FOOTER
    ========================================= */
+footer {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  text-align: center;
+  margin-top: auto;
+  padding: 30px 20px;
+}
+
 .p5-footer {
-    font-family: 'Bebas Neue', sans-serif;
-    letter-spacing: 0.2em;
-    font-size: 1.6rem;
-    margin-top: 60px;
-    padding: 40px;
-    transform: rotate(-2deg);
-    color: #ffffff;
+  font-family: var(--p5-font-impact);
+  font-size: 1.3rem;
+  letter-spacing: 4px;
+  color: var(--p5-white);
+  opacity: 0.6;
+  margin: 0;
+  transform: rotate(-1deg);
 }
 
 .p5-hint {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace;
-    font-size: 0.85rem;
-    color: #ffffff;
-    opacity: 0.6;
-    margin-top: -20px;
-    margin-bottom: 30px;
-    letter-spacing: 1.5px;
-    text-align: center;
+  font-family: var(--p5-font-mono);
+  font-size: 0.75rem;
+  color: var(--p5-red);
+  opacity: 0.4;
+  margin-top: -10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
 /* =========================================
-   ANIMATIONEN (Keyframes)
+   PROJECTS PAGE
    ========================================= */
-@keyframes swipeIn {
-    0% { transform: translateX(-150%) rotate(15deg); }
-    100% { transform: translateX(0) rotate(15deg); }
-}
-
-@keyframes titlePop {
-    0% { transform: scale(0.1) rotate(10deg) skewX(30deg); opacity: 0; }
-    70% { transform: scale(1.1) rotate(-5deg) skewX(-10deg); opacity: 1; }
-    100% { transform: scale(1) rotate(-3deg) skewX(0deg); opacity: 1; }
-}
-
-@keyframes cardOneFadeIn {
-    0% { opacity: 0; transform: translateY(80px) rotate(10deg); }
-    100% { opacity: 1; transform: translateY(0) rotate(2deg); }
-}
-
-@keyframes cardTwoFadeIn {
-    0% { opacity: 0; transform: translateY(80px) rotate(-10deg); }
-    100% { opacity: 1; transform: translateY(0) rotate(1.5deg); }
-}
-
-@keyframes cardThreeFadeIn {
-    0% { opacity: 0; transform: translateY(80px) rotate(10deg); }
-    100% { opacity: 1; transform: translateY(0) rotate(-1.5deg); }
-}
-
-@keyframes navButtonsFadeIn {
-    0% { opacity: 0; transform: translateY(20px); }
-    100% { opacity: 1; transform: translateY(0); }
+.back-button {
+  opacity: 0;
+  animation: fadeSlideIn 0.5s ease-out 0.4s forwards;
 }
 
 /* =========================================
-   PROJEKT BEREICH
+   PROJECT ITEM
    ========================================= */
 .project-item {
-    border: 4px solid #000000;
-    padding: 20px;
-    margin-top: 35px;
-    transform: skewX(-3deg);
-    background-color: #f9f9f9;
-    cursor: pointer;
-    transition: all 0.2s ease-out;
+  border: 3px solid var(--p5-white);
+  padding: 25px;
+  margin-top: 30px;
+  background: var(--p5-gray);
+  cursor: pointer;
+  transition: all var(--p5-transition);
+  clip-path: polygon(2% 0%, 100% 2%, 98% 100%, 0% 98%);
+  position: relative;
 }
 
-body[data-theme="dark"] .project-item {
-    background-color: #1a1a1a;
-    border-color: #ffffff;
-    color: #ffffff;
+.project-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--p5-red);
+  transition: width var(--p5-transition);
 }
 
 .project-item:hover {
-    transform: scale(1.05) rotate(2deg) skewX(0deg);
-    box-shadow: -8px 8px 0px #1b13b1;
-    border-color: #1b13b1;
+  transform: translateX(8px) scale(1.02);
+  border-color: var(--p5-red);
+  box-shadow: -8px 8px 0px rgba(211, 0, 0, 0.3);
+}
+
+.project-item:hover::before {
+  width: 6px;
 }
 
 .project-item h3 {
-    font-family: 'Impact', sans-serif;
-    color: #1b13b1;
-    font-size: 2rem;
-    margin: 0 0 10px 0;
-    letter-spacing: 2px;
+  font-family: var(--p5-font-impact);
+  color: var(--p5-red);
+  font-size: 1.8rem;
+  margin: 0 0 8px 0;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.project-item p {
+  font-family: var(--p5-font-body);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0;
+  opacity: 0.85;
 }
 
 .project-btn {
-    display: inline-block;
-    background-color: #000000;
-    color: #ffffff;
-    padding: 8px 15px;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.2rem;
-    letter-spacing: 1px;
-    margin-top: 15px;
-    border: 2px solid #ffffff;
-}
-
-body[data-theme="light"] .project-btn {
-    border-color: #000000;
+  display: inline-block;
+  background: var(--p5-red);
+  color: var(--p5-white);
+  font-family: var(--p5-font-impact);
+  font-size: 1rem;
+  letter-spacing: 2px;
+  padding: 8px 18px;
+  margin-top: 15px;
+  border: none;
+  clip-path: polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%);
+  transition: all var(--p5-transition);
+  text-transform: uppercase;
 }
 
 .project-item:hover .project-btn {
-    background-color: #1b13b1;
+  background: var(--p5-white);
+  color: var(--p5-black);
+  transform: skewX(-5deg);
 }
 
 /* =========================================
-   MODAL (POP-UP)
+   MODAL (P5R STYLE)
    ========================================= */
 .modal-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.85);
-    z-index: 2000;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    animation: fadeIn 0.3s forwards;
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.92);
+  z-index: 2000;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  animation: fadeIn 0.25s forwards;
 }
 
 .modal-content {
-    width: 90%;
-    max-width: 400px;
-    transform: rotate(1deg);
+  width: 90%;
+  max-width: 420px;
+  background: var(--p5-gray);
+  padding: 35px;
+  position: relative;
+  clip-path: polygon(2% 0%, 100% 2%, 98% 100%, 0% 98%);
+  border: 2px solid var(--p5-red);
+}
+
+.modal-content p {
+  font-family: var(--p5-font-body);
+  font-size: 1rem;
+  line-height: 1.5;
 }
 
 .modal-buttons {
-    margin-top: 30px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.modal-buttons .p5-link {
+  font-size: 1.2rem;
 }
 
 .modal-desc {
-    font-size: 0.9rem !important;
-    opacity: 0.8;
-    margin-top: -10px;
-    margin-bottom: 10px;
-    text-align: center;
+  font-size: 0.85rem !important;
+  opacity: 0.6;
+  margin-top: -10px;
+  text-align: center;
+  font-family: var(--p5-font-mono) !important;
 }
 
 .close-btn {
-    margin-top: 25px;
-    background: none;
-    border: none;
-    color: #ff3333;
-    font-family: 'Impact', sans-serif;
-    font-size: 1.2rem;
-    cursor: pointer;
-    text-decoration: underline;
-    width: 100%;
-    text-align: center;
+  margin-top: 20px;
+  background: none;
+  border: 2px solid var(--p5-red);
+  color: var(--p5-red);
+  font-family: var(--p5-font-impact);
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+  transition: all var(--p5-transition);
+  clip-path: polygon(3% 0%, 100% 0%, 97% 100%, 0% 100%);
+  text-transform: uppercase;
 }
 
 .close-btn:hover {
-    color: #1b13b1;
+  background: var(--p5-red);
+  color: var(--p5-white);
+  box-shadow: 0 0 20px var(--p5-red-glow);
+}
+
+/* =========================================
+   ANIMATIONS
+   ========================================= */
+@keyframes fadeSlideIn {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes fadeIn {
-    to { opacity: 1; }
+  to { opacity: 1; }
+}
+
+@keyframes letterPop {
+  0% { transform: scale(0) rotate(30deg); opacity: 0; }
+  60% { transform: scale(1.2) rotate(-5deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
 }
 
 /* =========================================
-   MOBILE ANPASSUNGEN
+   RESPONSIVE
    ========================================= */
 @media (max-width: 600px) {
-    .p5-list {
-        grid-template-columns: 1fr;
-    }
-    
-    .p5-title {
-        font-size: 3.5rem;
-    }
-    
-    .p5-card {
-        padding: 45px 20px 25px 20px; 
-    }
+  header {
+    margin-top: 50px;
+  }
 
-    .nav-btn {
-        font-size: 1.5rem;
-        padding: 12px 20px;
-    }
+  .p5-title {
+    gap: 1px;
+    padding: 8px 10px;
+  }
+
+  .p5-title-letter {
+    font-size: 2.4rem !important;
+    padding: 1px 4px;
+  }
+
+  .p5-card {
+    padding: 30px 20px;
+  }
+
+  .collapsible {
+    padding: 0 20px !important;
+  }
+
+  .collapsible.active {
+    padding: 30px 20px !important;
+  }
+
+  .p5-list {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .p5-link {
+    font-size: 1.2rem;
+  }
+
+  .nav-btn {
+    font-size: 1.3rem;
+    padding: 10px 20px;
+    width: 100%;
+  }
+
+  .p5-badge {
+    font-size: 1rem;
+    padding: 5px 14px;
+    left: 12px;
+    top: -16px;
+  }
+
+  .project-item h3 {
+    font-size: 1.4rem;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 1024px) {
+  .p5-title-letter {
+    font-size: 3.5rem !important;
+  }
+}
+
+@media (min-width: 1025px) {
+  .p5-title-letter {
+    font-size: 4.5rem !important;
+  }
 }
 
 /* =========================================
-   LIGHT MODE ANPASSUNGEN
+   LIGHT THEME (P5R INVERSION)
    ========================================= */
-body[data-theme="light"] .theme-toggle {
-    border-color: #000000;
+body[data-theme="light"] {
+  background-color: #f4f1ea;
+  color: #111111;
 }
 
-body[data-theme="light"] .theme-toggle:hover {
-    background-color: #000000;
-    color: #ffffff;
-    border-color: #1b13b1;
-    box-shadow: -8px 8px 0px #1b13b1;
-}
-
-body[data-theme="light"] .p5-title {
-    background-color: #000000;
-    color: #ffffff;
+body[data-theme="light"] .p5-card {
+  background: #f4f1ea;
+  color: #111111;
+  border-left-color: var(--p5-red);
 }
 
 body[data-theme="light"] .socials-card {
-    background-color: #ffffff;
-    color: #000000;
+  background: #f4f1ea;
+  color: #111111;
+  border-right-color: var(--p5-red);
+}
+
+body[data-theme="light"] .project-item {
+  background: #f4f1ea;
+  border-color: #111111;
+}
+
+body[data-theme="light"] .nav-btn {
+  background: #ffffff;
+  border-color: #111111;
+  color: #111111;
+}
+
+body[data-theme="light"] .nav-btn:hover {
+  background: var(--p5-red);
+  color: #ffffff;
+  border-color: var(--p5-red);
 }
 
 body[data-theme="light"] .p5-link {
-    background-color: #ffffff; 
-    color: #000000;          
-    border: 3px solid #000000; 
+  background: #ffffff;
+  border-color: #111111;
+  color: #111111;
 }
 
 body[data-theme="light"] .p5-link:hover {
-    background-color: #000000; 
-    color: #ffffff;           
-    border-color: #000000;     
-    box-shadow: -8px 8px 0px #1b13b1; 
+  background: var(--p5-red);
+  color: #ffffff;
+  border-color: var(--p5-red);
+}
+
+body[data-theme="light"] .modal-content {
+  background: #f4f1ea;
+  color: #111111;
+}
+
+body[data-theme="light"] .theme-toggle {
+  border-color: #111111;
+  color: #111111;
+  background: #ffffff;
+}
+
+body[data-theme="light"] .project-btn {
+  background: var(--p5-red);
+  color: #ffffff;
 }
 
 body[data-theme="light"] .p5-footer {
-    color: #000000;
+  color: #111111;
 }
 
 body[data-theme="light"] .p5-hint {
-    color: #000000;
-}
-
-body[data-theme="light"] .main-card {
-    background-color: #ffffff;
-    color: #000000;
-}
-
-body[data-theme="light"] .projects-card {
-    background-color: #ffffff;
-    color: #000000;
+  color: var(--p5-red);
 }

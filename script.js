@@ -1,87 +1,168 @@
-// Theme Toggle Code
-document.addEventListener('DOMContentLoaded', () => {
-    const themeToggle = document.getElementById('themeToggle');
-    const themeIcon = document.querySelector('.theme-icon');
-    
-    const savedTheme = localStorage.getItem('theme');
-    let initialTheme;
-    
-    if (savedTheme) {
-        initialTheme = savedTheme;
+/* =========================================
+   PARTICLE BACKGROUND (P5R STARS)
+   ========================================= */
+class Particle {
+  constructor(canvas) {
+    this.canvas = canvas;
+    this.reset();
+  }
+
+  reset() {
+    this.x = Math.random() * this.canvas.width;
+    this.y = Math.random() * this.canvas.height;
+    this.size = Math.random() * 2.5 + 0.5;
+    this.speedX = (Math.random() - 0.5) * 0.3;
+    this.speedY = (Math.random() - 0.5) * 0.3;
+    this.opacity = Math.random() * 0.8 + 0.2;
+    this.pulseSpeed = Math.random() * 0.02 + 0.005;
+    this.pulseOffset = Math.random() * Math.PI * 2;
+    this.baseOpacity = this.opacity;
+    this.hue = Math.random() > 0.7 ? 0 : 0;
+    this.saturation = Math.random() > 0.7 ? 80 : 0;
+  }
+
+  update(time) {
+    this.x += this.speedX;
+    this.y += this.speedY;
+
+    if (this.x < 0) this.x = this.canvas.width;
+    if (this.x > this.canvas.width) this.x = 0;
+    if (this.y < 0) this.y = this.canvas.height;
+    if (this.y > this.canvas.height) this.y = 0;
+
+    this.opacity = this.baseOpacity * (0.5 + 0.5 * Math.sin(time * this.pulseSpeed + this.pulseOffset));
+  }
+
+  draw(ctx) {
+    ctx.save();
+    ctx.globalAlpha = this.opacity;
+    if (this.hue === 0 && this.saturation > 0) {
+      ctx.fillStyle = `hsl(0, ${this.saturation}%, 60%)`;
     } else {
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        initialTheme = prefersDark ? 'dark' : 'light';
+      ctx.fillStyle = '#ffffff';
     }
-    
-    setTheme(initialTheme);
-    
-    if (themeToggle) {
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = document.body.getAttribute('data-theme') || 'dark';
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            setTheme(newTheme);
-        });
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+}
+
+class ParticleSystem {
+  constructor(canvasId) {
+    this.canvas = document.getElementById(canvasId);
+    if (!this.canvas) return;
+    this.ctx = this.canvas.getContext('2d');
+    this.particles = [];
+    this.particleCount = 120;
+    this.animationId = null;
+    this.startTime = Date.now();
+
+    this.resize();
+    this.init();
+    this.animate();
+    window.addEventListener('resize', () => this.resize());
+  }
+
+  resize() {
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
+  }
+
+  init() {
+    this.particles = [];
+    for (let i = 0; i < this.particleCount; i++) {
+      this.particles.push(new Particle(this.canvas));
     }
-    
-    function setTheme(theme) {
-        document.body.setAttribute('data-theme', theme);
-        localStorage.setItem('theme', theme);
-        
-        if (theme === 'light') {
-            themeIcon.textContent = '☀️';
-        } else {
-            themeIcon.textContent = '🌙';
-        }
+  }
+
+  animate() {
+    const elapsed = Date.now() - this.startTime;
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    for (const p of this.particles) {
+      p.update(elapsed);
+      p.draw(this.ctx);
     }
+
+    this.animationId = requestAnimationFrame(() => this.animate());
+  }
+}
+
+/* =========================================
+   THEME TOGGLE
+   ========================================= */
+document.addEventListener('DOMContentLoaded', () => {
+  new ParticleSystem('particleCanvas');
+
+  const themeToggle = document.getElementById('themeToggle');
+  const themeIcon = document.querySelector('.theme-icon');
+
+  const savedTheme = localStorage.getItem('theme');
+  let initialTheme;
+
+  if (savedTheme) {
+    initialTheme = savedTheme;
+  } else {
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    initialTheme = prefersDark ? 'dark' : 'light';
+  }
+
+  setTheme(initialTheme);
+
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = document.body.getAttribute('data-theme') || 'dark';
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      setTheme(newTheme);
+    });
+  }
+
+  function setTheme(theme) {
+    document.body.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+
+    if (themeIcon) {
+      themeIcon.textContent = theme === 'light' ? '\u2600' : '\u263E';
+    }
+  }
 });
 
-// TOGGLE ABOUT SECTION
+/* =========================================
+   TOGGLE SECTIONS
+   ========================================= */
 function toggleAbout() {
-    const aboutSection = document.getElementById('aboutSection');
-    if (aboutSection) {
-        aboutSection.classList.toggle('active');
-    }
+  const el = document.getElementById('aboutSection');
+  if (el) el.classList.toggle('active');
 }
 
-// TOGGLE CONNECT SECTION
 function toggleConnect() {
-    const connectSection = document.getElementById('connectSection');
-    if (connectSection) {
-        connectSection.classList.toggle('active');
-    }
+  const el = document.getElementById('connectSection');
+  if (el) el.classList.toggle('active');
 }
 
-// Funktionen für das Wordle Modal
+/* =========================================
+   WORDLE MODAL
+   ========================================= */
 function openWordleModal() {
-    const modal = document.getElementById('wordleModal');
-    if (modal) {
-        modal.style.display = 'flex';
-        
-        setTimeout(() => {
-            modal.classList.add('active');
-        }, 10);
-        
-        document.body.style.overflow = 'hidden'; 
-    }
+  const modal = document.getElementById('wordleModal');
+  if (!modal) return;
+  modal.style.display = 'flex';
+  setTimeout(() => modal.classList.add('active'), 10);
+  document.body.style.overflow = 'hidden';
 }
 
 function closeWordleModal() {
-    const modal = document.getElementById('wordleModal');
-    if (modal) {
-        modal.classList.remove('active');
-        
-        setTimeout(() => {
-            modal.style.display = 'none';
-        }, 200);
-        
-        document.body.style.overflow = ''; 
-    }
+  const modal = document.getElementById('wordleModal');
+  if (!modal) return;
+  modal.classList.remove('active');
+  setTimeout(() => { modal.style.display = 'none'; }, 200);
+  document.body.style.overflow = '';
 }
 
-// Close modal when clicking outside
-window.onclick = function(event) {
-    const modal = document.getElementById('wordleModal');
-    if (modal && event.target == modal) {
-        closeWordleModal();
-    }
-}
+window.onclick = function (event) {
+  const modal = document.getElementById('wordleModal');
+  if (modal && event.target === modal) {
+    closeWordleModal();
+  }
+};
